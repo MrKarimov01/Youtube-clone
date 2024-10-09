@@ -26,7 +26,7 @@ const main = () => {
   getData()
 
   
-},[])
+},[selectedC])
 
 
 
@@ -42,7 +42,7 @@ const main = () => {
           <Typography variant='h4' fontWeight={"bold"} mb={2}>
             {selectedC} <span style={{color: colors.secondary}}>videos</span>
           </Typography>
-          <Videos videos={videos}/>
+          <Videos videos_data={videos}/>
         </Container>
       </Box>
     </Stack>
