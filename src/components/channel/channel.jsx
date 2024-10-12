@@ -17,7 +17,6 @@ const channel = () => {
         try {
           const data = await ApiService.fetching(`channels?part=snippet&id=${id}`)
           setChannelDetail(data.items[0])
-          console.log("channel",data);
           
           const dataVideo =await ApiService.fetching(`search?channelId=${id}&part=snippet%2Cid&order=date`)
           setVideos(dataVideo?.items)
@@ -28,6 +27,8 @@ const channel = () => {
       }
       getData()
     },[id])
+    console.log(videos);
+    
   return (
     <Box minHeight={"95vh"} mt={"1vh"}>
       <Box>

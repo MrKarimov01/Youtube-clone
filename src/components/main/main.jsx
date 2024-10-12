@@ -27,7 +27,13 @@ const main = () => {
 
   
 },[selectedC])
+if(selectedC == "New"){
+  document.title = "Youtube - Streamlinedev"
+}
+else{
 
+  document.title = `${selectedC} - Streamlinedev`
+}
 
 
   return (

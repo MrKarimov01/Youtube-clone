@@ -11,7 +11,7 @@ import "./index.css"
 
 
 
-createRoot(document.getElementById('root')).render(
+createRoot(document.getElementById('media-hub')).render(
   <StrictMode>
     <BrowserRouter>
       <App />

@@ -4,9 +4,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 const ChannelCard = ({data,marginTop}) => {
-    console.log("inner" , data);
-    console.log(data?.statistics?.subscriberCount);
-    
+    console.log("inner" , data?.snippet.title);
+    // console.log(data?.statistics?.subscriberCount);
+    document.title = `${data?.snippet.title?data?.snippet.title: "Youtube" } - Streamlinedev`
     
   return (
     <Box 

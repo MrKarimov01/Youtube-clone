@@ -13,9 +13,11 @@ const VideoDetail = () => {
 
   useEffect(() => {
     const getData = async () => {
+      
       try {
         const data = await ApiService.fetching(`videos?part=snippet,statistics&id=${id}`);
         setVideodetail(data.items[0]);
+        
         const realteData = await ApiService.fetching(`search?part=snippet&relatedToVideoId=${id}&type=video`)
         setRealteData(realteData.items)
       } catch (error) {
@@ -23,7 +25,9 @@ const VideoDetail = () => {
       }
     };
     getData();
+
   }, [id]);
+  document.title = `${videodetail?.snippet?.title? videodetail?.snippet?.title: "Youtube"} - Streamlinedev`
 
   if (!videodetail) return <div>Loading...</div>; // Loading holati
 

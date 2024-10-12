@@ -11,11 +11,15 @@ const search = () => {
   const [videos,setVideos] = useState([])
 
 
+
   useEffect(()=>{
     const getData = async () => {
+      document.title = id + " - Streamlinedev"
       try {
+        
         const data = await ApiService.fetching(`search?part=snippet&q=${id}`);
         setVideos(data.items);
+        
       } catch (error) {
         console.error('Error fetching data:', error);
       }
