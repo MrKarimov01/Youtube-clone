@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { ApiService } from '../service/api.service';
-import { Box, Chip, Stack, Typography } from '@mui/material';
+import { Avatar, Box, Chip, Stack, Typography } from '@mui/material';
 import ReactPlayer from 'react-player';
-import { FavoriteOutlined, MarkChatRead, Tag, Vibration } from '@mui/icons-material';
+import { CheckCircle, FavoriteOutlined, MarkChatRead, Tag, Vibration } from '@mui/icons-material';
+import {Videos}from "../index"
 
 const VideoDetail = () => {
   const [videodetail, setVideodetail] = useState(null);
+  const [realteData,setRealteData]= useState([])
   const { id } = useParams();
 
   useEffect(() => {
     const getData = async () => {
       try {
         const data = await ApiService.fetching(`videos?part=snippet,statistics&id=${id}`);
-        console.log(data);
         setVideodetail(data.items[0]);
+        const realteData = await ApiService.fetching(`search?part=snippet&relatedToVideoId=${id}&type=video`)
+        setRealteData(realteData.items)
       } catch (error) {
         console.log(error);
       }
@@ -26,9 +29,9 @@ const VideoDetail = () => {
 
   return (
     <Box minHeight={"90vh"} mb={10}>
-      <Box display={"flex"}>
-        <Box width={"75%"}>
-          <ReactPlayer url={`https://www.youtube.com/watch?v=${id}`} className="videoRplayer" />
+      <Box display={"flex"} sx={{flexDirection: {xs: "column",md:"row"}}}>
+        <Box sx={{ width: {xs: "100%",md:"75%"}}}>
+          <ReactPlayer url={`https://www.youtube.com/watch?v=${id}`} className="videoRplayer"  controls/>
           {videodetail.snippet.tags && videodetail.snippet.tags.map((item, index) => (
             <Chip
               label={item}
@@ -62,8 +65,25 @@ const VideoDetail = () => {
               {parseInt(videodetail.statistics.commentCount).toLocaleString()} comments
             </Stack>
           </Stack>
+          <Link to={`/channel/${videodetail?.snippet?.channelId}`}>
+          <Stack direction={"row"} py={1} px={2} alignItems={"center"}>
+            <Avatar
+              alt={videodetail.snippet.channelTitle}
+              src={videodetail.snippet.thumbnails.default.url}
+              />
+            <Typography variant='subtitle2' color='gray'>
+              {videodetail.snippet.channelTitle}
+              <CheckCircle sx={{fontSize: "12px" ,color: "gray",ml: "5px"}}/>
+            </Typography>
+          </Stack>
+            </Link>
         </Box>
-        <Box width={"25%"}>Suggested video</Box>
+        <Box sx={{ width: {xs: "100%",md:"25%"}}} px={2} py={{md: 1, xs: 5}} justifyContent={"center"}
+          alignItems={"center"}
+          
+        >
+          <Videos videos_data={realteData}/>
+        </Box>
       </Box>
     </Box>
   );

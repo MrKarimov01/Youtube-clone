@@ -27,7 +27,7 @@ const videoCard = ({ data }) => {
 
         </>
 
-        <>
+        <Link to={`/channel/${data?.snippet?.channelId}`}>
           <Stack direction={"row"} position={"absolute"} bottom={"0"} alignItems={"center"} gap={'5px'}>
             <Avatar src={data?.snippet?.thumbnails?.high?.url} />
             <Typography variant='subtitle2' color={"gray"}>
@@ -36,7 +36,8 @@ const videoCard = ({ data }) => {
             </Typography>
 
           </Stack>
-        </>
+        </Link>
+      
       </CardContent>
     </Card>
   )
